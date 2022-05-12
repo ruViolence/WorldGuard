@@ -706,7 +706,7 @@ public class EventAbstractionListener extends AbstractListener {
             if (damager instanceof Player) {
                 ItemStack item = ((Player) damager).getItemInHand();
 
-                if (item != null) {
+                if (item.getType() != Material.AIR) {
                     Events.fireToCancel(event, new UseItemEvent(event, create(damager), event.getEntity().getWorld(), item));
                 }
             }
