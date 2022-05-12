@@ -97,12 +97,12 @@ class RegionCommandsBase {
     protected static String checkRegionId(String id, boolean allowGlobal) throws CommandException {
         if (!ProtectedRegion.isValidId(id)) {
             throw new CommandException(
-                    "The region name of '" + id + "' contains characters that are not allowed.");
+                    "Название региона '" + id + "' содержит запрещенные символы.");
         }
 
         if (!allowGlobal && id.equalsIgnoreCase("__global__")) { // Sorry, no global
             throw new CommandException(
-                    "Sorry, you can't use __global__ here.");
+                    "Простите, но вы не можете использовать регион с названием '__global__'.");
         }
 
         return id;
@@ -135,7 +135,7 @@ class RegionCommandsBase {
             }
 
             throw new CommandException(
-                    "No region could be found with the name of '" + id + "'.");
+                    "Регион под названием '" + id + "' не найден.");
         }
 
         return region;
@@ -178,13 +178,13 @@ class RegionCommandsBase {
         if (set.size() == 0) {
             if (allowGlobal) {
                 ProtectedRegion global = checkExistingRegion(regionManager, "__global__", true);
-                player.sendMessage(ChatColor.GRAY + "You're not standing in any " +
-                        "regions. Using the global region for this world instead.");
+                player.sendMessage(ChatColor.GRAY + "Вы не находитесь ни в каком регионе. " +
+                        "Вместо этого используем глобальный регион.");
                 return global;
             }
             throw new CommandException(
-                    "You're not standing in a region." +
-                            "Specify an ID if you want to select a specific region.");
+                    "Вы не находитесь ни в каком регионе. " +
+                            "Укажите название региона, если вы хотите выбрать определенный регион.");
         } else if (set.size() > 1) {
             StringBuilder builder = new StringBuilder();
             boolean first = true;
@@ -198,7 +198,7 @@ class RegionCommandsBase {
             }
 
             throw new CommandException(
-                    "You're standing in several regions (please pick one).\nYou're in: " + builder.toString());
+                    "Вы находитесь в нескольких регионах, укажите один из них.\nНайденные регионы: " + builder.toString());
         }
 
         return set.iterator().next();
@@ -218,9 +218,9 @@ class RegionCommandsBase {
 
         if (selection == null) {
             throw new CommandException(
-                    "Please select an area first. " +
-                            "Use WorldEdit to make a selection! " +
-                            "(wiki: http://wiki.sk89q.com/wiki/WorldEdit).");
+                    "Для начала вам необходимо выделить территорию. " +
+                            "Используйте WorldEdit чтобы сделать выделение! " +
+                            "( wiki: http://wiki.sk89q.com/wiki/WorldEdit ).");
         }
 
         return selection;
@@ -235,8 +235,8 @@ class RegionCommandsBase {
      */
     protected static void checkRegionDoesNotExist(RegionManager manager, String id, boolean mayRedefine) throws CommandException {
         if (manager.hasRegion(id)) {
-            throw new CommandException("A region with that name already exists. Please choose another name." +
-                    (mayRedefine ? " To change the shape, use /region redefine " + id + "." : ""));
+            throw new CommandException("Регион с таким названием уже существует. Пожалуйста, выберите другое название." +
+                    (mayRedefine ? " Чтобы переопределить регион, используйте /region redefine " + id + "." : ""));
         }
     }
 
@@ -360,7 +360,7 @@ class RegionCommandsBase {
             Vector pt2 = cuboid.getMaximumPoint();
             CuboidSelection selection = new CuboidSelection(world, pt1, pt2);
             worldEdit.setSelection(player, selection);
-            player.sendMessage(ChatColor.YELLOW + "Region selected as a cuboid.");
+            player.sendMessage(ChatColor.YELLOW + "Регион выбран как куб.");
 
         } else if (region instanceof ProtectedPolygonalRegion) {
             ProtectedPolygonalRegion poly2d = (ProtectedPolygonalRegion) region;
@@ -369,15 +369,14 @@ class RegionCommandsBase {
                     poly2d.getMinimumPoint().getBlockY(),
                     poly2d.getMaximumPoint().getBlockY() );
             worldEdit.setSelection(player, selection);
-            player.sendMessage(ChatColor.YELLOW + "Region selected as a polygon.");
+            player.sendMessage(ChatColor.YELLOW + "Регион выбран как полигон.");
 
         } else if (region instanceof GlobalProtectedRegion) {
             throw new CommandException(
-                    "Can't select global regions! " +
-                            "That would cover the entire world.");
+                    "Нельзя выбирать глобальный регион!");
 
         } else {
-            throw new CommandException("Unknown region type: " +
+            throw new CommandException("Неизвестный тип региона: " +
                     region.getClass().getCanonicalName());
         }
     }

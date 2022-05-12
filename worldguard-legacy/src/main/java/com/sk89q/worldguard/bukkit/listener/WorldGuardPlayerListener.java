@@ -276,8 +276,8 @@ public class WorldGuardPlayerListener implements Listener {
 
             if (item != null && item.getTypeId() == wcfg.regionWand && plugin.hasPermission(player, "worldguard.region.wand")) {
                 if (set.size() > 0) {
-                    player.sendMessage(ChatColor.YELLOW + "Can you build? "
-                            + (set.canBuild(localPlayer) ? "Yes" : "No"));
+                    player.sendMessage(ChatColor.YELLOW + "Вы "
+                            + (set.canBuild(localPlayer) ? ChatColor.GREEN + "§aможете" : ChatColor.RED + "§cне можете") + ChatColor.YELLOW + " здесь строить.");
 
                     StringBuilder str = new StringBuilder();
                     for (Iterator<ProtectedRegion> it = set.iterator(); it.hasNext();) {
@@ -287,9 +287,9 @@ public class WorldGuardPlayerListener implements Listener {
                         }
                     }
 
-                    player.sendMessage(ChatColor.YELLOW + "Applicable regions: " + str.toString());
+                    player.sendMessage(ChatColor.YELLOW + "Присутствующие здесь регионы: " + str.toString());
                 } else {
-                    player.sendMessage(ChatColor.YELLOW + "WorldGuard: No defined regions here!");
+                    player.sendMessage(ChatColor.YELLOW + "В этом месте нет регионов.");
                 }
 
                 event.setCancelled(true);

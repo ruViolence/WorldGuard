@@ -71,16 +71,16 @@ public class RegionPrintoutBuilder implements Callable<String> {
      */
     public void appendBasics() {
         builder.append(ChatColor.BLUE);
-        builder.append("Region: ");
+        builder.append("Регион: ");
         builder.append(ChatColor.YELLOW);
         builder.append(region.getId());
         
         builder.append(ChatColor.GRAY);
-        builder.append(" (type=");
+        builder.append(" (тип=");
         builder.append(region.getType().getName());
         
         builder.append(ChatColor.GRAY);
-        builder.append(", priority=");
+        builder.append(", приоритет=");
         builder.append(region.getPriority());
         builder.append(")");
 
@@ -92,7 +92,7 @@ public class RegionPrintoutBuilder implements Callable<String> {
      */
     public void appendFlags() {
         builder.append(ChatColor.BLUE);
-        builder.append("Flags: ");
+        builder.append("Флаги: ");
         
         appendFlagsList(true);
         
@@ -144,7 +144,7 @@ public class RegionPrintoutBuilder implements Callable<String> {
             if (useColors) {
                 builder.append(ChatColor.RED);
             }
-            builder.append("(none)");
+            builder.append("(нет)");
         }
     }
     
@@ -213,12 +213,12 @@ public class RegionPrintoutBuilder implements Callable<String> {
      */
     public void appendDomain() {
         builder.append(ChatColor.BLUE);
-        builder.append("Owners: ");
+        builder.append("Владельцы: ");
         addDomainString(region.getOwners());
         newLine();
 
         builder.append(ChatColor.BLUE);
-        builder.append("Members: ");
+        builder.append("Участники: ");
         addDomainString(region.getMembers());
         newLine();
     }
@@ -229,7 +229,7 @@ public class RegionPrintoutBuilder implements Callable<String> {
             builder.append(domain.toUserFriendlyString(cache));
         } else {
             builder.append(ChatColor.RED);
-            builder.append("(none)");
+            builder.append("(нет)");
         }
     }
     
@@ -240,7 +240,7 @@ public class RegionPrintoutBuilder implements Callable<String> {
         BlockVector min = region.getMinimumPoint();
         BlockVector max = region.getMaximumPoint();
         builder.append(ChatColor.BLUE);
-        builder.append("Bounds:");
+        builder.append("Границы:");
         builder.append(ChatColor.YELLOW);
         builder.append(" (").append(min.getBlockX()).append(",").append(min.getBlockY()).append(",").append(min.getBlockZ()).append(")");
         builder.append(" -> (").append(max.getBlockX()).append(",").append(max.getBlockY()).append(",").append(max.getBlockZ()).append(")");
@@ -250,9 +250,9 @@ public class RegionPrintoutBuilder implements Callable<String> {
 
     private void appendRegionInformation() {
         builder.append(ChatColor.GRAY);
-        builder.append("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
-        builder.append(" Region Info ");
-        builder.append("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
+        builder.append("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
+        builder.append(" Информация о Регионе ");
+        builder.append("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550");
         newLine();
         appendBasics();
         appendFlags();
