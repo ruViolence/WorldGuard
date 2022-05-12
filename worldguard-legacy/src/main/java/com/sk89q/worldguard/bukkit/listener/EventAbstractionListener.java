@@ -990,6 +990,25 @@ public class EventAbstractionListener extends AbstractListener {
             }
             return;
         }
+
+        // Handle water/lava placement
+        if (item != null && (item.getType() == Material.WATER_BUCKET || item.getType() == Material.LAVA_BUCKET)) {
+            Events.fireToCancel(event, new PlaceBlockEvent(event, cause, placed.getLocation(), item.getType() == Material.WATER_BUCKET ? Material.STATIONARY_WATER : Material.STATIONARY_LAVA));
+            return;
+        }
+
+        // Handle water/lava intake
+        if (item != null && item.getType() == Material.BUCKET && (placed.getType() == Material.STATIONARY_LAVA || placed.getType() == Material.STATIONARY_WATER)) {
+            Events.fireToCancel(event, new UseBlockEvent(event, cause, placed.getLocation(), Material.BUCKET));
+            return;
+        }
+
+        // Handle shulker boxes
+        if (item != null && item.getType().name().endsWith("_SHULKER_BOX")) {
+            // CraftBukkit doesn't or didn't throw a clicked place for this
+            Events.fireToCancel(event, new PlaceBlockEvent(event, cause, placed.getLocation(), item.getType()));
+            return;
+        }
     }
 
     @SuppressWarnings("unchecked")
