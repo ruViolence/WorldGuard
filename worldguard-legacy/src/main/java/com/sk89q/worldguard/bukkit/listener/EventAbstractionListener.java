@@ -702,7 +702,15 @@ public class EventAbstractionListener extends AbstractListener {
         } else if (event instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent entityEvent = (EntityDamageByEntityEvent) event;
             Entity damager = entityEvent.getDamager();
-            Events.fireToCancel(event, new DamageEntityEvent(event, create(damager), event.getEntity()));
+            DamageEntityEvent eventToFire = new DamageEntityEvent(event, create(damager), event.getEntity());
+            if (damager instanceof Firework) {
+                eventToFire.getRelevantFlags().add(DefaultFlag.FIREWORK_DAMAGE);
+            } else if (damager instanceof Creeper) {
+                eventToFire.getRelevantFlags().add(DefaultFlag.CREEPER_EXPLOSION);
+            } else if (damager.getType() == EntityType.MINECART_TNT) {
+                eventToFire.getRelevantFlags().add(DefaultFlag.OTHER_EXPLOSION);
+            }
+            Events.fireToCancel(event, eventToFire);
 
             // Item use event with the item in hand
             // Older blacklist handler code used this, although it suffers from
