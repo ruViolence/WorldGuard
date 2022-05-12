@@ -995,11 +995,11 @@ public class EventAbstractionListener extends AbstractListener {
 
     private void playDenyEffect(Player player, Location location) {
         //player.playSound(location, Sound.SUCCESSFUL_HIT, 0.2f, 0.4f);
-        player.playEffect(location, Effect.SMOKE, BlockFace.UP);
+        player.spawnParticle(Particle.SMOKE_NORMAL, location, 3, 0, 0, 0, 0);
     }
 
     private void playDenyEffect(Location location) {
-        location.getWorld().playEffect(location, Effect.SMOKE, BlockFace.UP);
+        location.getWorld().spawnParticle(Particle.SMOKE_NORMAL, location, 3, 0, 0, 0, 0);
     }
 
     public class SpigotCompatListener implements Listener {
