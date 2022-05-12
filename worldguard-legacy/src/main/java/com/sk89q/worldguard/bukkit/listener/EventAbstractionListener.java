@@ -68,6 +68,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.event.vehicle.VehicleDamageEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Dispenser;
@@ -677,7 +678,7 @@ public class EventAbstractionListener extends AbstractListener {
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
         World world = player.getWorld();
-        ItemStack item = player.getItemInHand();
+        ItemStack item = event.getHand() != EquipmentSlot.HAND ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
         Entity entity = event.getRightClicked();
 
         Events.fireToCancel(event, new UseItemEvent(event, create(player), world, item));
