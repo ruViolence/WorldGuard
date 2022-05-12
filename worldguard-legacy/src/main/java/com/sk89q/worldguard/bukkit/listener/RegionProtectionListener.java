@@ -216,7 +216,7 @@ public class RegionProtectionListener extends AbstractListener {
 
                 return true;
             }
-        });
+        }, true);
     }
 
     @EventHandler(ignoreCancelled = true)
