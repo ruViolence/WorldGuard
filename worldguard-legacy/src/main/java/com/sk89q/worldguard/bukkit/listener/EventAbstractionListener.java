@@ -19,6 +19,7 @@
 
 package com.sk89q.worldguard.bukkit.listener;
 
+import com.github.ruviolence.reaper.event.block.SpongeAbsorbEvent;
 import com.google.common.collect.Lists;
 import com.sk89q.worldguard.bukkit.WorldConfiguration;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -924,6 +925,11 @@ public class EventAbstractionListener extends AbstractListener {
     public void onCauldronLevelChange(CauldronLevelChangeEvent event) {
         if (event.getEntity() == null) return;
         interactDebounce.debounce(event.getBlock(), event.getEntity(), event, new UseBlockEvent(event, create(event.getEntity()), event.getBlock()).setAllowed(hasInteractBypass(event.getBlock())));
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onSpongeAbsorb(SpongeAbsorbEvent event) {
+        Events.fireBulkEventToCancel(event, new BreakBlockEvent(event, create(event.getBlock()), event.getBlock().getLocation().getWorld(), event.blockList(), Material.AIR));
     }
 
     /**
