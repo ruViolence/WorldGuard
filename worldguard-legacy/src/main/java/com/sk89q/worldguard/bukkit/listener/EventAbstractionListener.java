@@ -262,6 +262,9 @@ public class EventAbstractionListener extends AbstractListener {
         Entity entity = event.getEntity();
 
         Events.fireBulkEventToCancel(event, new BreakBlockEvent(event, create(entity), event.getLocation().getWorld(), event.blockList(), Material.AIR));
+        if (entity instanceof Creeper) {
+            Cause.untrackParentCause(entity);
+        }
     }
 
     @SuppressWarnings("deprecation")
