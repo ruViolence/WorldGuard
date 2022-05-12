@@ -46,6 +46,7 @@ import com.sk89q.worldguard.protection.events.DisallowedPVPEvent;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -108,7 +109,7 @@ public class RegionProtectionListener extends AbstractListener {
                 RegionQuery query = getPlugin().getRegionContainer().createQuery();
                 String message = query.queryValue(location, player, DefaultFlag.DENY_MESSAGE);
                 if (message != null && !message.isEmpty()) {
-                    player.sendMessage(message.replace("%what%", what));
+                    player.sendMessage(StringUtils.replace(message,"%what%", what));
                 }
                 WGMetadata.put(player, DENY_MESSAGE_KEY, now);
             }

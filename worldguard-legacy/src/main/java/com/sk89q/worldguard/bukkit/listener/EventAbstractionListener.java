@@ -199,11 +199,9 @@ public class EventAbstractionListener extends AbstractListener {
         List<Block> blockList = Lists.transform(event.getBlocks(), new BlockStateAsBlockFunction());
 
         Player player = event.getPlayer();
-        if (player != null) {
-            Events.fireBulkEventToCancel(event, new PlaceBlockEvent(event, create(player), event.getLocation().getWorld(), blockList, Material.AIR));
-        } else {
-            Events.fireBulkEventToCancel(event, new PlaceBlockEvent(event, create(event.getLocation().getBlock()), event.getLocation().getWorld(), blockList, Material.AIR));
-        }
+        Events.fireBulkEventToCancel(event, new PlaceBlockEvent(event,
+                create(player != null ? player : event.getLocation().getBlock()),
+                event.getLocation().getWorld(), blockList, Material.AIR));
 
         if (!event.isCancelled() && event.getBlocks().size() != originalCount) {
             event.getLocation().getBlock().setType(Material.AIR);
@@ -289,6 +287,7 @@ public class EventAbstractionListener extends AbstractListener {
                 Events.fireBulkEventToCancel(event, new BreakBlockEvent(event, cause, event.getBlock().getWorld(), blocks, Material.AIR));
                 if (originalSize != blocks.size()) {
                     event.setCancelled(true);
+                    return;
                 }
                 for (Block b : blocks) {
                     Location loc = b.getRelative(direction).getLocation();
@@ -730,8 +729,6 @@ public class EventAbstractionListener extends AbstractListener {
         if (event instanceof PlayerUnleashEntityEvent) {
             PlayerUnleashEntityEvent playerEvent = (PlayerUnleashEntityEvent) event;
             Events.fireToCancel(playerEvent, new UseEntityEvent(playerEvent, create(playerEvent.getPlayer()), event.getEntity()));
-        } else {
-            // TODO: Raise anyway?
         }
     }
 
@@ -1018,7 +1015,7 @@ public class EventAbstractionListener extends AbstractListener {
         }
     }
 
-    public class LingeringPotionListener implements Listener {
+    public static class LingeringPotionListener implements Listener {
         @EventHandler(ignoreCancelled = true)
         public void onLingeringSplash(LingeringPotionSplashEvent event) {
             AreaEffectCloud aec = event.getAreaEffectCloud();

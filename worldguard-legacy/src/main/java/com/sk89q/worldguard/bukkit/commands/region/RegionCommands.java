@@ -795,10 +795,6 @@ public final class RegionCommands extends RegionCommandsBase {
         if (world != null) {
             RegionManager manager = checkRegionManager(plugin, world);
 
-            if (manager == null) {
-                throw new CommandException("No region manager exists for world '" + world.getName() + "'.");
-            }
-
             ListenableFuture<?> future = plugin.getExecutorService().submit(new RegionManagerReloader(manager));
 
             AsyncCommandHelper.wrap(future, plugin, sender)
@@ -853,10 +849,6 @@ public final class RegionCommands extends RegionCommandsBase {
 
         if (world != null) {
             RegionManager manager = checkRegionManager(plugin, world);
-
-            if (manager == null) {
-                throw new CommandException("No region manager exists for world '" + world.getName() + "'.");
-            }
 
             ListenableFuture<?> future = plugin.getExecutorService().submit(new RegionManagerSaver(manager));
 

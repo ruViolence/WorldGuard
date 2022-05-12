@@ -25,6 +25,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.util.paste.EngineHubPaste;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
@@ -55,72 +56,72 @@ public final class CommandUtils {
     public static String replaceColorMacros(String str) {
         // TODO: Make this more efficient
 
-        str = str.replace("`r", ChatColor.RED.toString());
-        str = str.replace("`R", ChatColor.DARK_RED.toString());
+        str = StringUtils.replace(str, "`r", ChatColor.RED.toString());
+        str = StringUtils.replace(str, "`R", ChatColor.DARK_RED.toString());
 
-        str = str.replace("`y", ChatColor.YELLOW.toString());
-        str = str.replace("`Y", ChatColor.GOLD.toString());
+        str = StringUtils.replace(str, "`y", ChatColor.YELLOW.toString());
+        str = StringUtils.replace(str, "`Y", ChatColor.GOLD.toString());
 
-        str = str.replace("`g", ChatColor.GREEN.toString());
-        str = str.replace("`G", ChatColor.DARK_GREEN.toString());
+        str = StringUtils.replace(str, "`g", ChatColor.GREEN.toString());
+        str = StringUtils.replace(str, "`G", ChatColor.DARK_GREEN.toString());
 
-        str = str.replace("`c", ChatColor.AQUA.toString());
-        str = str.replace("`C", ChatColor.DARK_AQUA.toString());
+        str = StringUtils.replace(str, "`c", ChatColor.AQUA.toString());
+        str = StringUtils.replace(str, "`C", ChatColor.DARK_AQUA.toString());
 
-        str = str.replace("`b", ChatColor.BLUE.toString());
-        str = str.replace("`B", ChatColor.DARK_BLUE.toString());
+        str = StringUtils.replace(str, "`b", ChatColor.BLUE.toString());
+        str = StringUtils.replace(str, "`B", ChatColor.DARK_BLUE.toString());
 
-        str = str.replace("`p", ChatColor.LIGHT_PURPLE.toString());
-        str = str.replace("`P", ChatColor.DARK_PURPLE.toString());
+        str = StringUtils.replace(str, "`p", ChatColor.LIGHT_PURPLE.toString());
+        str = StringUtils.replace(str, "`P", ChatColor.DARK_PURPLE.toString());
 
-        str = str.replace("`0", ChatColor.BLACK.toString());
-        str = str.replace("`1", ChatColor.DARK_GRAY.toString());
-        str = str.replace("`2", ChatColor.GRAY.toString());
-        str = str.replace("`w", ChatColor.WHITE.toString());
+        str = StringUtils.replace(str, "`0", ChatColor.BLACK.toString());
+        str = StringUtils.replace(str, "`1", ChatColor.DARK_GRAY.toString());
+        str = StringUtils.replace(str, "`2", ChatColor.GRAY.toString());
+        str = StringUtils.replace(str, "`w", ChatColor.WHITE.toString());
 
-        str = str.replace("`k", ChatColor.MAGIC.toString());
+        str = StringUtils.replace(str, "`k", ChatColor.MAGIC.toString());
 
-        str = str.replace("`l", ChatColor.BOLD.toString());
-        str = str.replace("`m", ChatColor.STRIKETHROUGH.toString());
-        str = str.replace("`n", ChatColor.UNDERLINE.toString());
-        str = str.replace("`o", ChatColor.ITALIC.toString());
+        str = StringUtils.replace(str, "`l", ChatColor.BOLD.toString());
+        str = StringUtils.replace(str, "`m", ChatColor.STRIKETHROUGH.toString());
+        str = StringUtils.replace(str, "`n", ChatColor.UNDERLINE.toString());
+        str = StringUtils.replace(str, "`o", ChatColor.ITALIC.toString());
 
-        str = str.replace("`x", ChatColor.RESET.toString());
+        str = StringUtils.replace(str, "`x", ChatColor.RESET.toString());
 
         // MC classic
 
-        str = str.replace("&c", ChatColor.RED.toString());
-        str = str.replace("&4", ChatColor.DARK_RED.toString());
+        str = StringUtils.replace(str, "&c", ChatColor.RED.toString());
+        str = StringUtils.replace(str, "&4", ChatColor.DARK_RED.toString());
 
-        str = str.replace("&e", ChatColor.YELLOW.toString());
-        str = str.replace("&6", ChatColor.GOLD.toString());
+        str = StringUtils.replace(str, "&e", ChatColor.YELLOW.toString());
+        str = StringUtils.replace(str, "&6", ChatColor.GOLD.toString());
 
-        str = str.replace("&a", ChatColor.GREEN.toString());
-        str = str.replace("&2", ChatColor.DARK_GREEN.toString());
+        str = StringUtils.replace(str, "&a", ChatColor.GREEN.toString());
+        str = StringUtils.replace(str, "&2", ChatColor.DARK_GREEN.toString());
 
-        str = str.replace("&b", ChatColor.AQUA.toString());
-        str = str.replace("&3", ChatColor.DARK_AQUA.toString());
+        str = StringUtils.replace(str, "&b", ChatColor.AQUA.toString());
+        str = StringUtils.replace(str, "&3", ChatColor.DARK_AQUA.toString());
 
-        str = str.replace("&9", ChatColor.BLUE.toString());
-        str = str.replace("&1", ChatColor.DARK_BLUE.toString());
+        str = StringUtils.replace(str, "&9", ChatColor.BLUE.toString());
+        str = StringUtils.replace(str, "&1", ChatColor.DARK_BLUE.toString());
 
-        str = str.replace("&d", ChatColor.LIGHT_PURPLE.toString());
-        str = str.replace("&5", ChatColor.DARK_PURPLE.toString());
+        str = StringUtils.replace(str, "&d", ChatColor.LIGHT_PURPLE.toString());
+        str = StringUtils.replace(str, "&5", ChatColor.DARK_PURPLE.toString());
 
-        str = str.replace("&0", ChatColor.BLACK.toString());
-        str = str.replace("&8", ChatColor.DARK_GRAY.toString());
-        str = str.replace("&7", ChatColor.GRAY.toString());
-        str = str.replace("&f", ChatColor.WHITE.toString());
+        str = StringUtils.replace(str, "&0", ChatColor.BLACK.toString());
+        str = StringUtils.replace(str, "&8", ChatColor.DARK_GRAY.toString());
+        str = StringUtils.replace(str, "&7", ChatColor.GRAY.toString());
+        str = StringUtils.replace(str, "&f", ChatColor.WHITE.toString());
 
-        str = str.replace("&k", ChatColor.MAGIC.toString());
+        str = StringUtils.replace(str, "&k", ChatColor.MAGIC.toString());
 
-        str = str.replace("&l", ChatColor.BOLD.toString());
-        str = str.replace("&m", ChatColor.STRIKETHROUGH.toString());
-        str = str.replace("&n", ChatColor.UNDERLINE.toString());
-        str = str.replace("&o", ChatColor.ITALIC.toString());
+        str = StringUtils.replace(str, "&l", ChatColor.BOLD.toString());
+        str = StringUtils.replace(str, "&m", ChatColor.STRIKETHROUGH.toString());
+        str = StringUtils.replace(str, "&n", ChatColor.UNDERLINE.toString());
+        str = StringUtils.replace(str, "&o", ChatColor.ITALIC.toString());
 
-        str = str.replace("&x", ChatColor.RESET.toString());
-        str = str.replace("&r", ChatColor.RESET.toString());
+        str = StringUtils.replace(str, "&x", ChatColor.RESET.toString());
+        str = StringUtils.replace(str, "&r", ChatColor.RESET.toString());
 
         return str;
     }

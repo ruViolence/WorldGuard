@@ -200,7 +200,7 @@ public class RegionLister implements Callable<Integer> {
         public boolean isContainedWithin(DefaultDomain domain) throws CommandException;
     }
 
-    private class RegionListEntry implements Comparable<RegionListEntry> {
+    private static class RegionListEntry implements Comparable<RegionListEntry> {
         private final String id;
         private final int index;
         boolean isOwner;

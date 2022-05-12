@@ -45,7 +45,7 @@ public class MemberCommands extends RegionCommandsBase {
         this.plugin = plugin;
     }
 
-    @Command(aliases = {"addmember", "addmember", "addmem", "am"},
+    @Command(aliases = {"addmember", "addmem", "am"},
             usage = "<id> <members...>",
             flags = "nw:",
             desc = "Add a member to a region",
@@ -57,8 +57,6 @@ public class MemberCommands extends RegionCommandsBase {
         String id = args.getString(0);
         RegionManager manager = checkRegionManager(plugin, world);
         ProtectedRegion region = checkExistingRegion(manager, id, true);
-
-        id = region.getId();
 
         // Check permissions
         if (!getPermissionModel(sender).mayAddMembers(region)) {
@@ -82,7 +80,7 @@ public class MemberCommands extends RegionCommandsBase {
                 .thenRespondWith("Новые участники в регион '%s' успешно добавлены.", "Не удалось добавить участников");
     }
 
-    @Command(aliases = {"addowner", "addowner", "ao"},
+    @Command(aliases = {"addowner", "ao"},
             usage = "<id> <owners...>",
             flags = "nw:",
             desc = "Add an owner to a region",

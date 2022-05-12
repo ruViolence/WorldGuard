@@ -20,6 +20,7 @@
 package com.sk89q.worldguard.protection.flags;
 
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.WeatherType;
@@ -194,7 +195,7 @@ public final class DefaultFlag {
      */
     public static Flag<?> fuzzyMatchFlag(FlagRegistry flagRegistry, String id) {
         for (Flag<?> flag : flagRegistry) {
-            if (flag.getName().replace("-", "").equalsIgnoreCase(id.replace("-", ""))) {
+            if (StringUtils.remove(flag.getName(), '-').equalsIgnoreCase(StringUtils.remove(id, '-'))) {
                 return flag;
             }
         }
