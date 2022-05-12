@@ -71,6 +71,8 @@ public final class DefaultFlag {
     // BUILD flag so they need to be TRUE for their defaults.
     public static final StateFlag MOB_DAMAGE = new StateFlag("mob-damage", true);
     public static final StateFlag MOB_SPAWNING = new StateFlag("mob-spawning", true);
+    public static final StateFlag MOB_ENTRY = new StateFlag("mob-entry", true);
+    public static final StateFlag MOB_EXIT = new StateFlag("mob-exit", true);
     public static final StateFlag CREEPER_EXPLOSION = new StateFlag("creeper-explosion", true);
     public static final StateFlag ENDERDRAGON_BLOCK_DAMAGE = new StateFlag("enderdragon-block-damage", true);
     public static final StateFlag GHAST_FIREBALL = new StateFlag("ghast-fireball", true);
@@ -148,8 +150,8 @@ public final class DefaultFlag {
     public static final Flag<?>[] flagsList = new Flag<?>[] {
             PASSTHROUGH, BUILD, BLOCK_BREAK, BLOCK_PLACE, PVP, CHEST_ACCESS, PISTONS,
             TNT, LIGHTER, RIDE, USE, INTERACT, PLACE_VEHICLE, DESTROY_VEHICLE, DAMAGE_ANIMALS, SLEEP,
-            MOB_DAMAGE, MOB_SPAWNING, DENY_SPAWN, INVINCIBILITY, EXP_DROPS, FIREWORK_DAMAGE, WITHER_DAMAGE,
-            CREEPER_EXPLOSION, OTHER_EXPLOSION, ENDERDRAGON_BLOCK_DAMAGE, GHAST_FIREBALL, ENDER_BUILD,
+            MOB_DAMAGE, MOB_SPAWNING, MOB_ENTRY, MOB_EXIT, DENY_SPAWN, INVINCIBILITY, EXP_DROPS, FIREWORK_DAMAGE,
+            WITHER_DAMAGE, CREEPER_EXPLOSION, OTHER_EXPLOSION, ENDERDRAGON_BLOCK_DAMAGE, GHAST_FIREBALL, ENDER_BUILD,
             DENY_MESSAGE, ENTRY_DENY_MESSAGE, EXIT_DENY_MESSAGE, EXIT_OVERRIDE, EXIT_VIA_TELEPORT,
             GREET_MESSAGE, FAREWELL_MESSAGE, NOTIFY_ENTER, NOTIFY_LEAVE,
             EXIT, ENTRY, LIGHTNING, ENTITY_PAINTING_DESTROY, ENDERPEARL, CHORUS_TELEPORT,

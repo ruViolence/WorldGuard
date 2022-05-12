@@ -216,6 +216,7 @@ public class WorldGuardPlugin extends JavaPlugin {
 
         // Modules
         (playerMoveListener = new PlayerMoveListener(this)).registerEvents();
+        (new EntityMoveListener(this)).registerEvents();
         (new BlacklistListener(this)).registerEvents();
         (new ChestProtectionListener(this)).registerEvents();
         (new RegionProtectionListener(this)).registerEvents();

@@ -84,6 +84,7 @@ public class ConfigurationManager {
     public boolean useGodGroup;
     public boolean useAmphibiousGroup;
     public boolean usePlayerMove;
+    public boolean useEntityMove;
     public boolean usePlayerTeleports;
     public boolean deopOnJoin;
     public boolean blockInGameOp;
@@ -154,6 +155,7 @@ public class ConfigurationManager {
         useAmphibiousGroup = config.getBoolean("auto-no-drowning-group", false);
         config.removeProperty("auto-invincible-permission");
         usePlayerMove = config.getBoolean("use-player-move-event", true);
+        useEntityMove = config.getBoolean("use-entity-move-event", true);
         usePlayerTeleports = config.getBoolean("use-player-teleports", true);
 
         deopOnJoin = config.getBoolean("security.deop-everyone-on-join", false);
