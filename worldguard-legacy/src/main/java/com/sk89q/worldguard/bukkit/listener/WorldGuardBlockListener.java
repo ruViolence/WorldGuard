@@ -509,7 +509,6 @@ public class WorldGuardBlockListener implements Listener {
                     return;
                 }
             }
-            return;
         }
 
         if (type == BlockID.ICE) {
