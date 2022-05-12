@@ -91,7 +91,7 @@ public class RegionFlagsListener extends AbstractListener {
             event.filter(testState(query, DefaultFlag.ENDERDRAGON_BLOCK_DAMAGE), config.explosionFlagCancellation);
         }
 
-        if (event.getCause().find(Entities.enderCrystalType) != null) { // should be nullsafe even if enderCrystalType field is null
+        if (event.getCause().find(Entities.enderCrystalType) != null || event.getCause().find(EntityType.MINECART_TNT) != null) {
             event.filter(testState(query, DefaultFlag.OTHER_EXPLOSION), config.explosionFlagCancellation);
         }
     }
