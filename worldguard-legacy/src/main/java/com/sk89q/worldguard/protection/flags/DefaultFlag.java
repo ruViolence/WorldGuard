@@ -107,11 +107,11 @@ public final class DefaultFlag {
 
     // Flags that adjust behaviors that aren't state flags
     public static final StringFlag DENY_MESSAGE = new StringFlag("deny-message",
-            "" + ChatColor.RED + ChatColor.BOLD + "Эй!" + ChatColor.GRAY + " Ты не можешь %what%.");
+            "" + ChatColor.RED + ChatColor.BOLD + "Эй!" + ChatColor.WHITE + " Ты не можешь %what%.");
     public static final StringFlag ENTRY_DENY_MESSAGE = new StringFlag("entry-deny-message",
-            "" + ChatColor.RED + ChatColor.BOLD + "Эй!" + ChatColor.GRAY + " Ты не можешь входить на эту территорию.");
+            "" + ChatColor.RED + ChatColor.BOLD + "Эй!" + ChatColor.WHITE + " Ты не можешь входить на эту территорию.");
     public static final StringFlag EXIT_DENY_MESSAGE = new StringFlag("exit-deny-message",
-            "" + ChatColor.RED + ChatColor.BOLD + "Эй!" + ChatColor.GRAY + " Ты не можешь покинуть эту территорию.");
+            "" + ChatColor.RED + ChatColor.BOLD + "Эй!" + ChatColor.WHITE + " Ты не можешь покинуть эту территорию.");
     public static final BooleanFlag EXIT_OVERRIDE = new BooleanFlag("exit-override");
     public static final StateFlag EXIT_VIA_TELEPORT = new StateFlag("exit-via-teleport", true);
     public static final StringFlag GREET_MESSAGE = new StringFlag("greeting");
