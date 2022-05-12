@@ -704,8 +704,15 @@ public class EventAbstractionListener extends AbstractListener {
         ItemStack item = event.getHand() != EquipmentSlot.HAND ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
         Entity entity = event.getRightClicked();
 
-        Events.fireToCancel(event, new UseItemEvent(event, create(player), world, item));
-        Events.fireToCancel(event, new UseEntityEvent(event, create(player), entity));
+        if (Events.fireToCancel(event, new UseItemEvent(event, create(player), world, item))) {
+            return;
+        }
+        if (!Events.fireToCancel(event, new UseEntityEvent(event, create(player), entity))) {
+            // so this is a hack but CreeperIgniteEvent doesn't actually tell us who, so we need to do it here
+            if (item.getType() == Material.FLINT_AND_STEEL && entity.getType() == EntityType.CREEPER) {
+                Cause.trackParentCause(entity, player);
+            }
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
