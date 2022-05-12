@@ -25,6 +25,7 @@ import com.sk89q.worldguard.bukkit.internal.WGMetadata;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.metadata.Metadatable;
+import org.bukkit.projectiles.BlockProjectileSource;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -266,6 +267,8 @@ public final class Cause {
                     } else if (o instanceof Tameable) {
                         indirect = true;
                         addAll(((Tameable) o).getOwner());
+                    } else if (o instanceof BlockProjectileSource) {
+                        addAll(((BlockProjectileSource) o).getBlock());
                     }
 
                     // Add manually tracked parent causes
