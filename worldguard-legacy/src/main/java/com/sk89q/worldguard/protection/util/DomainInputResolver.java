@@ -55,7 +55,7 @@ public class DomainInputResolver implements Callable<DefaultDomain> {
 
     private final ProfileService profileService;
     private final String[] input;
-    private UserLocatorPolicy locatorPolicy = UserLocatorPolicy.UUID_ONLY;
+    private UserLocatorPolicy locatorPolicy = UserLocatorPolicy.NAME_ONLY;
 
     /**
      * Create a new instance.

@@ -23,6 +23,7 @@ import com.google.common.collect.ImmutableMap;
 import com.sk89q.squirrelid.Profile;
 import com.sk89q.squirrelid.cache.ProfileCache;
 import com.sk89q.worldguard.LocalPlayer;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.util.ChangeTracked;
 
 import javax.annotation.Nullable;
@@ -163,7 +164,12 @@ public class DefaultDomain implements Domain, ChangeTracked {
             addPlayer(player);
         }
         for (UUID uuid : other.getUniqueIds()) {
-            addPlayer(uuid);
+            Profile profile = WorldGuardPlugin.inst().getProfileCache().getIfPresent(uuid);
+            if (profile != null) {
+                addPlayer(profile.getName());
+            } else {
+                addPlayer(uuid);
+            }
         }
         for (String group : other.getGroups()) {
             addGroup(group);
@@ -273,7 +279,7 @@ public class DefaultDomain implements Domain, ChangeTracked {
         List<String> output = new ArrayList<String>();
 
         for (String name : playerDomain.getPlayers()) {
-            output.add("name:" + name);
+            output.add(name + "^");
         }
 
         if (cache != null) {

@@ -284,7 +284,7 @@ public final class RegionCommands extends RegionCommandsBase {
         }
 
         RegionAdder task = new RegionAdder(plugin, manager, region);
-        task.setLocatorPolicy(UserLocatorPolicy.UUID_ONLY);
+        task.setLocatorPolicy(UserLocatorPolicy.NAME_ONLY);
         task.setOwnersInput(new String[]{player.getName()});
         ListenableFuture<?> future = plugin.getExecutorService().submit(task);
 

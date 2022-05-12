@@ -42,7 +42,7 @@ public class RegionAdder implements Callable<ProtectedRegion> {
     private final ProtectedRegion region;
     @Nullable
     private String[] ownersInput;
-    private UserLocatorPolicy locatorPolicy = UserLocatorPolicy.UUID_ONLY;
+    private UserLocatorPolicy locatorPolicy = UserLocatorPolicy.NAME_ONLY;
 
     /**
      * Create a new instance.
@@ -69,7 +69,7 @@ public class RegionAdder implements Callable<ProtectedRegion> {
      */
     public void addOwnersFromCommand(CommandContext args, int namesIndex) {
         if (args.argsLength() >= namesIndex) {
-            setLocatorPolicy(args.hasFlag('n') ? UserLocatorPolicy.NAME_ONLY : UserLocatorPolicy.UUID_ONLY);
+            setLocatorPolicy(UserLocatorPolicy.NAME_ONLY);
             setOwnersInput(args.getSlice(namesIndex));
         }
     }

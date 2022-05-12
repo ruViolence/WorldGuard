@@ -259,11 +259,6 @@ public class RegionPrintoutBuilder implements Callable<String> {
         appendParents();
         appendDomain();
         appendBounds();
-
-        if (cache != null) {
-            builder.append(ChatColor.GRAY).append("Any names suffixed by * are 'last seen names' and may not be up to date.");
-            newLine();
-        }
     }
 
     @Override
