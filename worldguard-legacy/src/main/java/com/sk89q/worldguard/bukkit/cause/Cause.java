@@ -22,6 +22,7 @@ package com.sk89q.worldguard.bukkit.cause;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import com.sk89q.worldguard.bukkit.internal.WGMetadata;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.metadata.Metadatable;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -259,6 +261,14 @@ public final class Cause {
                         addAll(((TNTPrimed) o).getSource());
                     } else if (o instanceof Projectile) {
                         addAll(((Projectile) o).getShooter());
+                    } else if (o instanceof Firework) {
+                        UUID spawningUUID = ((Firework) o).getSpawningEntity();
+                        if (spawningUUID != null) {
+                            Entity spawningEntity = Bukkit.getEntity(spawningUUID);
+                            if (spawningEntity != null) {
+                                addAll(spawningEntity);
+                            }
+                        }
                     } else if (o instanceof Vehicle) {
                         ((Vehicle) o).getPassengers().forEach(this::addAll);
                     } else if (o instanceof AreaEffectCloud) {
