@@ -16,6 +16,7 @@ buildscript {
     repositories {
         mavenCentral()
         maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url = "https://oss.sonatype.org/content/repositories/central/" }
         jcenter()
     }
 
@@ -26,7 +27,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.1'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.4'
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:3.0.1'
         classpath 'org.ajoberstar:gradle-git:0.12.0'
     }
@@ -48,7 +49,6 @@ if (!project.hasProperty("gitCommitHash")) {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
-    apply plugin: 'checkstyle'
     apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: 'com.jfrog.artifactory-upload'
 
@@ -59,20 +59,27 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-    checkstyle.configFile = new File(rootProject.projectDir, "config/checkstyle/checkstyle.xml")
+    compileJava.options.encoding = 'UTF-8'
 
     repositories {
+        mavenLocal()
         mavenCentral()
         maven { url "http://repo.spongepowered.org/maven/" }
         maven { url "https://hub.spigotmc.org/nexus/content/groups/public" }
+        maven { url "https://oss.sonatype.org/content/repositories/central" }
         maven { url "http://maven.sk89q.com/repo/" }
+        maven { url "https://maven.enginehub.org/repo/" }
+        maven { url "https://maven.elmakers.com/repository/" }
         maven { url "http://repo.maven.apache.org/maven2" }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://maven.pkg.github.com/ruViolence/Reaper" }
     }
 
     if (JavaVersion.current().isJava8Compatible()) {
         // Java 8 turns on doclint which we fail
         tasks.withType(Javadoc) {
             options.addStringOption('Xdoclint:none', '-quiet')
+            options.encoding = 'UTF-8'
         }
     }
 
@@ -92,8 +99,6 @@ subprojects {
         archives javadocJar
     }
 
-    build.dependsOn(checkstyleMain)
-    build.dependsOn(checkstyleTest)
     build.dependsOn(sourcesJar)
     build.dependsOn(javadocJar)
 
@@ -105,27 +110,5 @@ subprojects {
         exclude 'GradleStart**'
         exclude '.cache'
         exclude 'LICENSE*'
-    }
-
-    artifactory {
-        contextUrl = "${artifactory_contextUrl}"
-        publish {
-            repository {
-                repoKey = project.version.contains("SNAPSHOT") ? 'libs-snapshot-local' : 'libs-release-local'
-                username = "${artifactory_user}"
-                password = "${artifactory_password}"
-                maven = true
-                
-            }
-        }
-
-        resolve {
-            repository {
-                repoKey = 'repo'
-                username = "${artifactory_user}"
-                password = "${artifactory_password}"
-                maven = true
-            }
-        }
     }
 }
