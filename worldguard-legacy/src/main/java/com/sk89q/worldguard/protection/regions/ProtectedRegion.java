@@ -750,7 +750,7 @@ public abstract class ProtectedRegion implements ChangeTracked, Comparable<Prote
      */
     public static boolean isValidId(String id) {
         checkNotNull(id);
-        return VALID_ID_PATTERN.matcher(id).matches();
+        return id.length() <= 32 && !id.startsWith("-") && VALID_ID_PATTERN.matcher(id).matches();
     }
 
     /**

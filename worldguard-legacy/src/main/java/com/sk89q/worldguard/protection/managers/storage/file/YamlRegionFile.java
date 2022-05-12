@@ -165,9 +165,9 @@ public class YamlRegionFile implements RegionDatabase {
                 if (parentId != null) {
                     parentSets.put(region, parentId);
                 }
-            } catch (NullPointerException e) {
+            } catch (NullPointerException | IllegalArgumentException e) {
                 log.log(Level.WARNING,
-                        "Unexpected NullPointerException encountered during parsing for the region '" + id + "'!\n" +
+                        "Unexpected Exception encountered during parsing for the region '" + id + "'!\n" +
                                 "Here is what the region data looks like:\n\n" + toYamlOutput(entry.getValue().getMap()) +
                                 "\n\nNote: This region will disappear as a result!", e);
             }
