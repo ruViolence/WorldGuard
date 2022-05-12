@@ -51,6 +51,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Hopper;
+import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.entity.*;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -311,14 +312,33 @@ public class EventAbstractionListener extends AbstractListener {
     public void onBlockPistonExtend(BlockPistonExtendEvent event) {
         EventDebounce.Entry entry = pistonExtendDebounce.getIfNotPresent(new BlockPistonExtendKey(event), event);
         if (entry != null) {
-            List<Block> blocks = new ArrayList<Block>(event.getBlocks());
-            int originalLength = blocks.size();
+            Cause cause = create(event.getBlock());
+            List<Block> blocks = new ArrayList<>(event.getBlocks());
+            int originalSize = blocks.size();
+            
+            Events.fireBulkEventToCancel(event, new BreakBlockEvent(event, cause, event.getBlock().getWorld(), blocks, Material.AIR));
+            if (originalSize != blocks.size()) {
+                event.setCancelled(true);
+                return;
+            }
+            
             BlockFace dir = event.getDirection();
             for (int i = 0; i < blocks.size(); i++) {
-                blocks.set(i, blocks.get(i).getRelative(dir));
+                Block block = blocks.get(i);
+                
+                PistonMoveReaction moveReaction = block.getPistonMoveReaction();
+                if (moveReaction == PistonMoveReaction.MOVE || moveReaction == PistonMoveReaction.PUSH_ONLY) {
+                    blocks.set(i, block.getRelative(dir));
+                    continue;
+                }
+                
+                Material type = block.getType();
+                if (type == Material.PISTON_BASE || type == Material.PISTON_STICKY_BASE || type == Material.PISTON_EXTENSION || type == Material.PISTON_MOVING_PIECE) {
+                    blocks.set(i, block.getRelative(dir));
+                }
             }
-            Events.fireBulkEventToCancel(event, new PlaceBlockEvent(event, create(event.getBlock()), event.getBlock().getWorld(), blocks, Material.STONE));
-            if (blocks.size() != originalLength) {
+            Events.fireBulkEventToCancel(event, new PlaceBlockEvent(event, cause, event.getBlock().getWorld(), blocks, Material.STONE));
+            if (blocks.size() != originalSize) {
                 event.setCancelled(true);
             }
             entry.setCancelled(event.isCancelled());
