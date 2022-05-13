@@ -183,7 +183,13 @@ public class MemberCommands extends RegionCommandsBase {
                     resolver.createRemoveAllFunction(region.getMembers()));
         }
 
-        AsyncCommandHelper.wrap(future, plugin, sender)
+        AsyncCommandHelper.wrap(Futures.transform(future, o -> {
+                    boolean cantRemoveSelf = sender instanceof Player && !sender.hasPermission("worldguard.self-remove");
+                    if (cantRemoveSelf) {
+                        region.getMembers().addPlayer(sender.getName());
+                    }
+                    return null;
+                }), plugin, sender)
                 .formatUsing(region.getId(), world.getName())
                 .registerWithSupervisor("Удаляем участников из региона '%s'")
                 .sendMessageAfterDelay("(Пожалуйста, подождите... определяем игроков...)")
@@ -230,7 +236,13 @@ public class MemberCommands extends RegionCommandsBase {
                     resolver.createRemoveAllFunction(region.getOwners()));
         }
 
-        AsyncCommandHelper.wrap(future, plugin, sender)
+        AsyncCommandHelper.wrap(Futures.transform(future, o -> {
+                    boolean cantRemoveSelf = sender instanceof Player && !sender.hasPermission("worldguard.self-remove");
+                    if (cantRemoveSelf) {
+                        region.getOwners().addPlayer(sender.getName());
+                    }
+                    return null;
+                }), plugin, sender)
                 .formatUsing(region.getId(), world.getName())
                 .registerWithSupervisor("Удаляем владельцев из региона '%s'")
                 .sendMessageAfterDelay("(Пожалуйста, подождите... определяем игроков...)")
