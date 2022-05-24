@@ -188,6 +188,10 @@ public class WorldGuardPlayerListener implements Listener {
             if (colonIndex != -1) {
                 hostname = hostname.substring(0, colonIndex);
             }
+            int slashIndex = hostname.indexOf('/');
+            if (slashIndex != -1) {
+                hostname = hostname.substring(0, slashIndex);
+            }
 
             if (!hostname.equals(hostKey)
                     && !(cfg.hostKeysAllowFMLClients && hostname.equals(hostKey + "\u0000FML\u0000"))) {
