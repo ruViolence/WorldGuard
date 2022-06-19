@@ -47,7 +47,6 @@ import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import org.apache.commons.lang3.StringUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -58,10 +57,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Tameable;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.vehicle.VehicleExitEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,7 +70,6 @@ import java.util.List;
 public class RegionProtectionListener extends AbstractListener {
 
     private static final String DENY_MESSAGE_KEY = "worldguard.region.lastMessage";
-    private static final String DISEMBARK_MESSAGE_KEY = "worldguard.region.disembarkMessage";
     private static final int LAST_MESSAGE_DELAY = 500;
 
     /**
@@ -515,31 +511,6 @@ public class RegionProtectionListener extends AbstractListener {
         if (!canDamage) {
             tellErrorMessage(event, event.getCause(), target, what);
             event.setCancelled(true);
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onVehicleExit(VehicleExitEvent event) {
-        Entity vehicle = event.getVehicle();
-        if (!isRegionSupportEnabled(vehicle.getWorld())) return; // Region support disabled
-        Entity exited = event.getExited();
-
-        if (vehicle instanceof Tameable && exited instanceof Player) {
-            Player player = (Player) exited;
-            if (!isWhitelisted(Cause.create(player), vehicle.getWorld(), false)) {
-                RegionQuery query = getPlugin().getRegionContainer().createQuery();
-                Location location = vehicle.getLocation();
-                if (!query.testBuild(location, player, DefaultFlag.RIDE, DefaultFlag.INTERACT)) {
-                    long now = System.currentTimeMillis();
-                    Long lastTime = WGMetadata.getIfPresent(player, DISEMBARK_MESSAGE_KEY, Long.class);
-                    if (lastTime == null || now - lastTime >= LAST_MESSAGE_DELAY) {
-                        player.sendMessage(ChatColor.GOLD + "Не высаживайтесь здесь!" + ChatColor.GRAY + " Потом вы не сможете залезть обратно.");
-                        WGMetadata.put(player, DISEMBARK_MESSAGE_KEY, now);
-                    }
-
-                    event.setCancelled(true);
-                }
-            }
         }
     }
 
