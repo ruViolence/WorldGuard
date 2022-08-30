@@ -21,11 +21,13 @@ package com.sk89q.worldguard.bukkit.commands.task;
 
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.bukkit.event.api.RegionAddedEvent;
 import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.util.DomainInputResolver;
 import com.sk89q.worldguard.protection.util.DomainInputResolver.UserLocatorPolicy;
+import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.util.concurrent.Callable;
@@ -40,6 +42,8 @@ public class RegionAdder implements Callable<ProtectedRegion> {
     private final WorldGuardPlugin plugin;
     private final RegionManager manager;
     private final ProtectedRegion region;
+    private final RegionAddedEvent.Cause cause;
+    private final Player who;
     @Nullable
     private String[] ownersInput;
     private UserLocatorPolicy locatorPolicy = UserLocatorPolicy.NAME_ONLY;
@@ -52,6 +56,19 @@ public class RegionAdder implements Callable<ProtectedRegion> {
      * @param region the region
      */
     public RegionAdder(WorldGuardPlugin plugin, RegionManager manager, ProtectedRegion region) {
+        this(plugin, manager, region, null, null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param plugin the plugin
+     * @param manager the manage
+     * @param region the region
+     * @param cause the cause
+     * @param who the player
+     */
+    public RegionAdder(WorldGuardPlugin plugin, RegionManager manager, ProtectedRegion region, RegionAddedEvent.Cause cause, Player who) {
         checkNotNull(plugin);
         checkNotNull(manager);
         checkNotNull(region);
@@ -59,6 +76,8 @@ public class RegionAdder implements Callable<ProtectedRegion> {
         this.plugin = plugin;
         this.manager = manager;
         this.region = region;
+        this.cause = cause;
+        this.who = who;
     }
 
     /**
@@ -84,6 +103,10 @@ public class RegionAdder implements Callable<ProtectedRegion> {
         }
 
         manager.addRegion(region);
+
+        if (cause != null && who != null) {
+            new RegionAddedEvent(region, cause, who).callEvent();
+        }
 
         return region;
     }

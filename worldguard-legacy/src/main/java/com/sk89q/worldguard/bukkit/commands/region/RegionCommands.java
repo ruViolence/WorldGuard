@@ -41,6 +41,7 @@ import com.sk89q.worldguard.bukkit.commands.task.RegionLister;
 import com.sk89q.worldguard.bukkit.commands.task.RegionManagerReloader;
 import com.sk89q.worldguard.bukkit.commands.task.RegionManagerSaver;
 import com.sk89q.worldguard.bukkit.commands.task.RegionRemover;
+import com.sk89q.worldguard.bukkit.event.api.RegionAddedEvent;
 import com.sk89q.worldguard.bukkit.event.api.RegionPreClaimEvent;
 import com.sk89q.worldguard.bukkit.permission.RegionPermissionModel;
 import com.sk89q.worldguard.bukkit.util.logging.LoggerToChatHandler;
@@ -129,7 +130,7 @@ public final class RegionCommands extends RegionCommandsBase {
             informNewUser(player, manager, region);
         }
 
-        RegionAdder task = new RegionAdder(plugin, manager, region);
+        RegionAdder task = new RegionAdder(plugin, manager, region, RegionAddedEvent.Cause.DEFINE, player);
         task.addOwnersFromCommand(args, 2);
         ListenableFuture<?> future = plugin.getExecutorService().submit(task);
 
@@ -183,7 +184,7 @@ public final class RegionCommands extends RegionCommandsBase {
 
         region.copyFrom(existing);
 
-        RegionAdder task = new RegionAdder(plugin, manager, region);
+        RegionAdder task = new RegionAdder(plugin, manager, region, RegionAddedEvent.Cause.REDEFINE, player);
         ListenableFuture<?> future = plugin.getExecutorService().submit(task);
 
         AsyncCommandHelper.wrap(future, plugin, player)
@@ -288,7 +289,7 @@ public final class RegionCommands extends RegionCommandsBase {
             return;
         }
 
-        RegionAdder task = new RegionAdder(plugin, manager, region);
+        RegionAdder task = new RegionAdder(plugin, manager, region, RegionAddedEvent.Cause.CLAIM, player);
         task.setLocatorPolicy(UserLocatorPolicy.NAME_ONLY);
         task.setOwnersInput(new String[]{player.getName()});
         ListenableFuture<?> future = plugin.getExecutorService().submit(task);
