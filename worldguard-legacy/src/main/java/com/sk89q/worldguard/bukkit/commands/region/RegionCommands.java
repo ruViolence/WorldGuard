@@ -41,6 +41,7 @@ import com.sk89q.worldguard.bukkit.commands.task.RegionLister;
 import com.sk89q.worldguard.bukkit.commands.task.RegionManagerReloader;
 import com.sk89q.worldguard.bukkit.commands.task.RegionManagerSaver;
 import com.sk89q.worldguard.bukkit.commands.task.RegionRemover;
+import com.sk89q.worldguard.bukkit.event.api.RegionPreClaimEvent;
 import com.sk89q.worldguard.bukkit.permission.RegionPermissionModel;
 import com.sk89q.worldguard.bukkit.util.logging.LoggerToChatHandler;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
@@ -281,6 +282,10 @@ public final class RegionCommands extends RegionCommandsBase {
                         "Максимальный размер: " + wcfg.maxClaimVolume + ", ваш размер: " + region.volume());
                 return;
             }
+        }
+
+        if (!new RegionPreClaimEvent(player, id).callEvent()) {
+            return;
         }
 
         RegionAdder task = new RegionAdder(plugin, manager, region);
