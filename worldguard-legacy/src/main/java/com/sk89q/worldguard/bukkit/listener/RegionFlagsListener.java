@@ -38,9 +38,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityExplodeEvent;
 
 import javax.annotation.Nullable;
 
@@ -91,7 +93,9 @@ public class RegionFlagsListener extends AbstractListener {
             event.filter(testState(query, DefaultFlag.ENDERDRAGON_BLOCK_DAMAGE), config.explosionFlagCancellation);
         }
 
-        if (event.getCause().find(Entities.enderCrystalType) != null || event.getCause().find(EntityType.MINECART_TNT) != null) {
+        if (event.getCause().find(Entities.enderCrystalType) != null || event.getCause().find(EntityType.MINECART_TNT) != null
+                || event.getOriginalEvent() instanceof BlockExplodeEvent
+                || event.getOriginalEvent() instanceof EntityExplodeEvent) {
             event.filter(testState(query, DefaultFlag.OTHER_EXPLOSION), config.explosionFlagCancellation);
         }
     }
