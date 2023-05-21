@@ -12,6 +12,7 @@ compileJava.options.encoding = 'UTF-8'
 dependencies {
     compile 'org.khelekore:prtree:1.5.0'
     compile 'com.github.ruviolence:reaper:1.12.2-R0.1-SNAPSHOT'
+    compile 'ru.violence:coreapi-bukkit:0.1.12'
     compile 'com.sk89q.worldedit:worldedit-bukkit:6.1.3-SNAPSHOT'
     compile 'com.sk89q:squirrelid:0.1.0'
     compile 'org.flywaydb:flyway-core:3.0'
