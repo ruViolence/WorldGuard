@@ -21,6 +21,7 @@ package com.sk89q.worldguard.domains;
 
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.util.ChangeTracked;
+import ru.violence.coreapi.common.api.CoreAPI;
 
 import java.util.Collections;
 import java.util.Set;
@@ -80,6 +81,9 @@ public class PlayerDomain implements Domain, ChangeTracked {
         checkNotNull(name);
         String trimmed = name.trim();
         if (!trimmed.isEmpty() && VALID_NAME.matcher(trimmed).matches()) {
+            if (CoreAPI.getUserManager().getUser(name) == null) {
+                return;
+            }
             setDirty(true);
             names.add(trimmed.toLowerCase());
             // Trim because some names contain spaces (previously valid Minecraft
@@ -95,6 +99,9 @@ public class PlayerDomain implements Domain, ChangeTracked {
      */
     public void addPlayer(UUID uniqueId) {
         checkNotNull(uniqueId);
+        if (CoreAPI.getUserManager().getUser(uniqueId) == null) {
+            return;
+        }
         setDirty(true);
         uniqueIds.add(uniqueId);
     }
