@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.regex.Pattern;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -34,6 +35,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class PlayerDomain implements Domain, ChangeTracked {
 
+    private static final Pattern VALID_NAME = Pattern.compile("^[a-zA-Z0-9_]{3,16}$");
     private final Set<UUID> uniqueIds = new CopyOnWriteArraySet<UUID>();
     private final Set<String> names = new CopyOnWriteArraySet<String>();
     private boolean dirty = true;
@@ -76,9 +78,10 @@ public class PlayerDomain implements Domain, ChangeTracked {
      */
     public void addPlayer(String name) {
         checkNotNull(name);
-        if (!name.trim().isEmpty()) {
+        String trimmed = name.trim();
+        if (!trimmed.isEmpty() && VALID_NAME.matcher(trimmed).matches()) {
             setDirty(true);
-            names.add(name.trim().toLowerCase());
+            names.add(trimmed.toLowerCase());
             // Trim because some names contain spaces (previously valid Minecraft
             // names) and we cannot store these correctly in the SQL storage
             // implementations
